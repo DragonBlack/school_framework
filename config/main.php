@@ -6,6 +6,14 @@ return [
         'urlManager' => [
             'controller' => 'site',
             'action' => 'index',
-        ]
+        ],
+
+        'db' => [
+            'class' => 'framework\db\Db',
+            'dbhost' => 'localhost',
+            'dbname' => 'mvc',
+            'dbuser' => 'root',
+            'dbpass' => '',
+        ],
     ],
 ];

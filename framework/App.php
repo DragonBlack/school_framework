@@ -29,6 +29,7 @@ class App {
 
     private function __construct(){
         $this->_init();
+        $this->_components['request'] = new Request();
     }
     private function __sleep(){}
     private function __wakeup(){}
@@ -39,9 +40,12 @@ class App {
         foreach($config->components as $name=>$conf){
             if(!isset($conf['class'])){
                 $className = 'framework\\'.ucfirst($name);
-                $this->_components[$name] = new $className();
-                $this->_components[$name]->init($conf);
             }
+            else{
+                $className = $conf['class'];
+            }
+            $this->_components[$name] = new $className();
+            $this->_components[$name]->init($conf);
         }
         $this->_parameters['allowLanguages'] = $config->allowLanguages;
         $this->_parameters['defaultLang'] = $config->defaultLang;

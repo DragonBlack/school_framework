@@ -9,6 +9,6 @@ class BaseController extends Component {
         if(!empty($this->layout)){
             School::$app->view->layout = $this->layout;
         }
-        School::$app->view->render($view, $params=[]);
+        School::$app->view->render($view, $params);
     }
 }
