@@ -9,4 +9,13 @@ abstract class Component {
             $this->$prop = $val;
         }
     }
+
+    public function __get($name) {
+        $getter = 'get'.ucfirst($name);
+        if(method_exists($this, $getter)){
+            return $this->$getter();
+        }
+
+        throw new AppException('Property "'.$name.'" not found');
+    }
 }

@@ -7,9 +7,13 @@ class UrlManager extends Component {
     protected $action;
     protected $_lang;
     protected $_params = [];
+    protected $defController;
+    protected $defAction;
 
     public function init($params = []){
         parent::init($params);
+        $this->defController = $this->controller;
+        $this->defAction = $this->action;
         $this->controller = ucfirst($this->controller).'Controller';
         $this->action = 'action'.ucfirst($this->action);
     }
@@ -53,5 +57,36 @@ class UrlManager extends Component {
 
     public function actionId(){
         return $this->action;
+    }
+
+    public function langId(){
+        return $this->_lang;
+    }
+
+    public function to($route, $params=[]){
+        $dl = School::$app->defaultLang;
+        $l = School::$app->urlManager->langId();
+        $lang = $dl != $l ? '/'.$l : '';
+
+        list($controller, $action) = explode('/', $route);
+
+        if(!$controller){
+            $controller = $this->defController;
+        }
+
+        if(!$action){
+            $action = $this->defAction;
+        }
+
+        if($controller == $this->defController && $action == $this->defAction){
+            return $lang.'/';
+        }
+
+
+        $url = $lang.'/'.$controller.'/';
+        if($action != $this->defAction){
+            $url .= $action.'/';
+        }
+        return $url;
     }
 }

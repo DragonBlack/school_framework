@@ -1,18 +1,22 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Serg
- * Date: 17.10.2016
- * Time: 19:55
+ * Class App
+ * @package framework
  */
 
 namespace framework;
 
 /**
- * Class App
- * @package framework
+ * Base class of web application
  *
- * @property array allowLanguages;
+ * @property    View            $view           View instance
+ * @property    UrlManager      $urlManager     URL manager instance
+ * @property    array           $allowLanguages
+ * @property    string          $defaultLang
+ * @property    AuthManager     $authManager    Auth manager instance
+ * @property    User            $user           User component
+ * @property    Session         $session        Session component
+ *
  */
 class App {
     private static $_instance;
@@ -47,10 +51,23 @@ class App {
             $this->_components[$name] = new $className();
             $this->_components[$name]->init($conf);
         }
-        $this->_parameters['allowLanguages'] = $config->allowLanguages;
-        $this->_parameters['defaultLang'] = $config->defaultLang;
+
         if(!isset($this->_components['view'])){
             $this->_components['view'] = new View();
+        }
+
+        if(!isset($this->_components['urlManager'])){
+            $this->_components['urlManager'] = new UrlManager();
+            $this->_components['urlManager']->init([
+                'controller' => 'site',
+                'action' => 'index',
+            ]);
+        }
+        $this->_parameters['allowLanguages'] = $config->allowLanguages ? : [];
+        $this->_parameters['defaultLang'] = $config->defaultLang ? : 'ru';
+
+        if(!isset($this->_components['user'])){
+            $this->_components['user'] = new User();
         }
     }
 
@@ -72,11 +89,25 @@ class App {
         $controllerClass = 'controllers\\'.$urlManager->controllerId();
         $controller = new $controllerClass;
         $action = $urlManager->actionId();
+
+        $this->authManager->autologin();
+
         if(method_exists($controller, $action)){
             $controller->$action();
         }
         else{
             throw new AppException('Action "'.$action.'" not found in class '.$controllerClass);
         }
+    }
+
+    public static function t($langKey){
+        $lang = School::$app->urlManager->langId();
+        $fileName = dirname(FRAMEWORK).DS.'messages'.DS.$lang.DS.'app.php';
+        if(is_file($fileName)){
+            $data = require $fileName;
+            return isset($data[$langKey]) ? $data[$langKey] : $langKey;
+        }
+
+        return $langKey;
     }
 }

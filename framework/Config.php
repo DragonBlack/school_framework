@@ -9,7 +9,7 @@
 namespace framework;
 
 
-class Config {
+final class Config {
     private $_config;
 
     public function __construct(){
@@ -17,9 +17,22 @@ class Config {
     }
 
     public function __get($name){
+        $method = 'get'.ucfirst($name);
+        if(method_exists($this, $method)){
+            return $this->$method();
+        }
+
         if(isset($this->_config[$name])){
             return $this->_config[$name];
         }
         throw new ConfigExeption("Section '$name' not found");
+    }
+
+    private function getAllowLanguages(){
+        return isset($this->_config['allowLanguages']) ? $this->_config['allowLanguages'] : [];
+    }
+
+    private function getDefaultLang(){
+        return isset($this->_config['defaultLang']) ? $this->_config['defaultLang'] : 'ru';
     }
 }

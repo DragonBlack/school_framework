@@ -1,9 +1,8 @@
 <?php
 namespace framework;
 
-
 class School {
-
+    /** @var  App   Application instance */
     public static $app;
     private static $_instance;
 
