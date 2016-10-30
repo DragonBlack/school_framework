@@ -28,4 +28,8 @@ class BaseController extends Component {
         header('Location: '.$url);
         exit(0);
     }
+
+    public function beforeAction(){
+        return true;
+    }
 }

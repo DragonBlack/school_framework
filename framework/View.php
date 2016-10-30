@@ -14,8 +14,10 @@ class View extends Component {
     public $layout = 'layouts/main';
 
     public function render($view, $params=[]){
+        $dir = School::$app->urlManager->controllerId();
+        $dir = strtolower(str_ireplace('controller', '', $dir));
         ob_start();
-        $fileName = ROOT.DIRECTORY_SEPARATOR.$this->viewPath.DIRECTORY_SEPARATOR.$view.'.php';
+        $fileName = ROOT.DIRECTORY_SEPARATOR.$this->viewPath.DIRECTORY_SEPARATOR.$dir.DIRECTORY_SEPARATOR.$view.'.php';
         extract($params);
         require $fileName;
         $content = ob_get_clean();

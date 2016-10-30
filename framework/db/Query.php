@@ -62,6 +62,26 @@ class Query {
         return $this->_execute()->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    public function update($table, $data, $where=[]){
+        $this->_sql = 'UPDATE `'.$table.'` SET ';
+        foreach($data as $field=>$val){
+            $this->_sql .= $field.' = :'.$field.', ';
+            $this->_params[':'.$field] = $val;
+        }
+
+        $this->_sql = substr($this->_sql, 0, -2);
+
+        if($where !== []){
+            $this->_sql .= ' WHERE '.$where[0];
+            unset($where[0]);
+            $this->_params = array_merge($this->_params, reset($where));
+        }
+
+        $stmt = $this->_conn->prepare($this->_sql);
+        $this->_buildValues($stmt);
+        return $stmt->execute();
+    }
+
     protected function _execute(){
         $this->_build();
         $stmt = $this->_conn->prepare($this->_sql);

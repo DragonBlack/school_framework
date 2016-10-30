@@ -93,7 +93,9 @@ class App {
         $this->authManager->autologin();
 
         if(method_exists($controller, $action)){
-            $controller->$action();
+            if($controller->beforeAction()) {
+                $controller->$action();
+            }
         }
         else{
             throw new AppException('Action "'.$action.'" not found in class '.$controllerClass);

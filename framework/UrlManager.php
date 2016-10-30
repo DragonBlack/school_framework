@@ -63,6 +63,14 @@ class UrlManager extends Component {
         return $this->_lang;
     }
 
+    public function parameter($name=null){
+        if($name === null){
+            return $this->_params;
+        }
+
+        return $this->_params[$name];
+    }
+
     public function to($route, $params=[]){
         $dl = School::$app->defaultLang;
         $l = School::$app->urlManager->langId();
@@ -78,15 +86,23 @@ class UrlManager extends Component {
             $action = $this->defAction;
         }
 
-        if($controller == $this->defController && $action == $this->defAction){
-            return $lang.'/';
+        if($controller == $this->defController && $action == $this->defAction && empty($params)){
+            $url = $lang.'/';
+        }
+        else{
+            $url = $lang.'/'.$controller.'/';
+            if($action != $this->defAction || !empty($params)){
+                $url .= $action.'/';
+            }
         }
 
 
-        $url = $lang.'/'.$controller.'/';
-        if($action != $this->defAction){
-            $url .= $action.'/';
+        if(!empty($params)){
+            foreach($params as $prop=>$val){
+                $url .= $prop.'/'.$val.'/';
+            }
         }
+
         return $url;
     }
 }

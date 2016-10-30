@@ -8,6 +8,9 @@ spl_autoload_register(function($className){
     if(file_exists($fileName)){
         require_once $fileName;
     }
+    else{
+        throw new Exception('Class "'.$className.'" not found');
+    }
 });
 
 \framework\School::getInstance();

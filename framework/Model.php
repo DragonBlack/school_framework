@@ -75,4 +75,20 @@ class Model {
     public function addError($attribute, $message){
         $this->_errors[$attribute] = $message;
     }
+
+    public function save(){
+        $data = $this->toArray();
+        unset($data['id']);
+        if($this->id) {
+            return (new Query())->update($this->tableName, $data, ['id=:id', [':id' => $this->id]]);
+        }
+    }
+
+    public function toArray(){
+        $res = [];
+        foreach($this->attributes() as $attribute){
+            $res[$attribute] = $this->$attribute;
+        }
+        return $res;
+    }
 }

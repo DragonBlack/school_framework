@@ -8,7 +8,7 @@ use models\LoginForm;
 
 class SiteController extends BaseController {
     public function actionIndex(){
-        //var_dump(School::$app->authManager);
+        //var_dump(School::$app->urlManager->parameter());
         $this->render('index');
     }
 
