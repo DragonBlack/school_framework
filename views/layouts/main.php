@@ -11,7 +11,19 @@ $urlManager = School::$app->urlManager;
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
     <script src="/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <?php
+    if(!School::$app->user->isGuest):
+        ?>
+        <style>
+            body{
+                <?= School::$app->user->cssSettings;?>
+            }
+        </style>
+        <?php
+    endif;
+    ?>
 </head>
+
 <body>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">

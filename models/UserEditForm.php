@@ -18,6 +18,8 @@ class UserEditForm extends Model {
     public $password;
     public $confirm;
     protected $userModel;
+    public $text_color;
+    public $bgd_color;
 
     public function init($userId){
         $this->userModel = User::find()
@@ -28,6 +30,8 @@ class UserEditForm extends Model {
             $this->id = $this->userModel->id;
             $this->email = $this->userModel->email;
             $this->login = $this->userModel->login;
+            $this->text_color = $this->userModel->text_color;
+            $this->bgd_color = $this->userModel->bgd_color;
         }
     }
 
@@ -43,7 +47,11 @@ class UserEditForm extends Model {
         if(!$this->hasError()){
             $this->userModel->login = $this->login;
             $this->userModel->email = $this->email;
-            $this->userModel->password = $this->password;
+            if(!empty($this->password)) {
+                $this->userModel->password = $this->password;
+            }
+            $this->userModel->text_color = $this->text_color;
+            $this->userModel->bgd_color = $this->bgd_color;
             return $this->userModel->save();
         }
         return false;

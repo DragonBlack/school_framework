@@ -15,6 +15,9 @@ return [
             'model' => 'models\User',
         ],
 
+        'user' => [
+            'class' => 'components\User',
+        ],
         'session' => [
 
         ],

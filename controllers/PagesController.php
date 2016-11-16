@@ -10,14 +10,19 @@ namespace controllers;
 
 
 use framework\BaseController;
+use framework\School;
 
 class PagesController extends BaseController {
 
     public function actionAbout(){
-
+        $this->render('about');
     }
 
     public function actionContacts(){
+        if(School::$app->user->isGuest){
+            $this->redirect(['site/login']);
+        }
 
+        $this->render('contacts');
     }
 }

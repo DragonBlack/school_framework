@@ -30,7 +30,7 @@ class ProfileController extends BaseController {
     }
 
     public function actionEdit(){
-        $uid = School::$app->urlManager->parameter('id');
+        $uid = School::$app->user->getId();
 
         $model = new UserEditForm();
         $model->init($uid);

@@ -1,5 +1,5 @@
 <div class="col-md-6 col-md-offset-3 col-sm-12">
-    <form action="<?=\framework\School::$app->urlManager->to('profile/edit', ['id'=>$form->id])?>" method="post" class="form-horizontal">
+    <form action="<?=\framework\School::$app->urlManager->to('profile/edit')?>" method="post" class="form-horizontal">
         <input type="hidden" name="UserEditForm[id]" value="<?=$form->id;?>"/>
         <div class="form-group">
             <label class="col-md-2 control-label" for="formlogin_login">Login</label>
@@ -26,6 +26,18 @@
             <label class="col-md-2 control-label" for="formlogin_confirm">Confirm</label>
             <div class="col-md-10">
                 <input type="password" name="UserEditForm[confirm]" id="formlogin_confirm" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="formlogin_text_color">Text color</label>
+            <div class="col-md-10">
+                <input type="text" name="UserEditForm[text_color]" id="formlogin_text_color" class="form-control" value="<?=$form->text_color?>"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="formlogin_bg_color">Background color</label>
+            <div class="col-md-10">
+                <input type="text" name="UserEditForm[bgd_color]" id="formlogin_bg_color" class="form-control" value="<?=$form->bgd_color?>"/>
             </div>
         </div>
         <div class="form-group">

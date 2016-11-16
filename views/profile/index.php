@@ -14,7 +14,7 @@
         <span><?=$user->statusText();?></span>
     </div>
     <div>
-        <a href="<?=\framework\School::$app->urlManager->to('profile/edit', ['id'=>$user->id])?>"
+        <a href="<?=\framework\School::$app->urlManager->to('profile/edit')?>"
             class="btn btn-success"
         >
             Изменить

@@ -12,6 +12,8 @@ class User extends Model {
     public $email;
     public $role;
     public $is_active;
+    public $text_color;
+    public $bgd_color;
 
     public function attributes(){
         return [
@@ -21,6 +23,8 @@ class User extends Model {
             'email',
             'role',
             'is_active',
+            'text_color',
+            'bgd_color',
         ];
     }
 

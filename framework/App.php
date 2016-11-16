@@ -49,6 +49,7 @@ class App {
                 $className = $conf['class'];
             }
             $this->_components[$name] = new $className();
+            unset($conf['class']);
             $this->_components[$name]->init($conf);
         }
 
@@ -63,8 +64,8 @@ class App {
                 'action' => 'index',
             ]);
         }
-        $this->_parameters['allowLanguages'] = $config->allowLanguages ? : [];
-        $this->_parameters['defaultLang'] = $config->defaultLang ? : 'ru';
+        $this->_parameters['allowLanguages'] = $config->allowLanguages;
+        $this->_parameters['defaultLang'] = $config->defaultLang;
 
         if(!isset($this->_components['user'])){
             $this->_components['user'] = new User();

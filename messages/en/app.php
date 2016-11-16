@@ -5,4 +5,5 @@ return [
     'menu.contacts' => 'Contacts',
     'menu.login' => 'Login',
     'menu.logout' => 'Logout',
+    'menu.profile' => 'Profile',
 ];
